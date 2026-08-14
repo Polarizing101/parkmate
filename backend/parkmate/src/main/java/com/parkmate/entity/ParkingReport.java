@@ -21,4 +21,13 @@ public class ParkingReport {
     private String reportType;
 
     private LocalDateTime createdAt;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "parking_spot_id")
+    private ParkingSpot parkingSpot;
+
 }

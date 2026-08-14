@@ -2,6 +2,8 @@ package com.parkmate.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.List;
+
 
 @Entity
 @Table(name = "parking_spots")
@@ -23,4 +25,8 @@ public class ParkingSpot {
     private String street;
 
     private String status;
+
+    @OneToMany(mappedBy = "parkingSpot")
+    private List<ParkingReport> reports;
+    
 }

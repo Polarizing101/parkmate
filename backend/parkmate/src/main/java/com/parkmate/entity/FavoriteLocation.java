@@ -21,4 +21,12 @@ public class FavoriteLocation {
     private Double latitude;
 
     private Double longitude;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+
+
 }
