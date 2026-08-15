@@ -6,6 +6,10 @@ import com.parkmate.entity.User;
 import com.parkmate.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import com.parkmate.dto.LoginRequest;
+
+
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -16,16 +20,25 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
-    public AuthenticationResponse register(
-            @RequestBody RegisterRequest request
-    ) {
+    @PostMapping("/login")
+public AuthenticationResponse login(
+        @RequestBody LoginRequest request
+) {
 
-        User user = userService.register(request);
+    boolean success = userService.login(
+            request.getEmail(),
+            request.getPassword()
+    );
 
+    if (success) {
         return new AuthenticationResponse(
-                "User registered successfully: "
-                        + user.getUsername()
+                "Login successful"
         );
     }
+
+    return new AuthenticationResponse(
+            "Invalid credentials"
+    );
+}
+
 }
