@@ -1,46 +1,26 @@
-import { useEffect, useState } from "react";
-import { getAllParkingSpots } from "./services/parkingService";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import DashboardPage from "./pages/DashboardPage";
 
 function App() {
-
-  const [parkingSpots, setParkingSpots] = useState([]);
-
-  useEffect(() => {
-    loadParkingSpots();
-  }, []);
-
-  const loadParkingSpots = async () => {
-    try {
-      const data = await getAllParkingSpots();
-      setParkingSpots(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
-    <div className="container">
-      <h1>🚗 ParkMate</h1>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
 
-      <p>Smart Parking Finder</p>
+        <Route
+          path="/register"
+          element={<RegisterPage />}
+        />
 
-      <div className="card">
-        <h2>Available Parking Spots</h2>
-
-        {parkingSpots.length === 0 ? (
-          <p>No parking spots found.</p>
-        ) : (
-          <ul>
-            {parkingSpots.map((spot) => (
-              <li key={spot.id}>
-                {spot.street}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
+        <Route
+          path="/dashboard"
+          element={<DashboardPage />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
