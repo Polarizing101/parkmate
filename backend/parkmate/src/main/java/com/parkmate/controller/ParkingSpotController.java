@@ -28,6 +28,22 @@ public class ParkingSpotController {
             .getAvailableParkingSpots();
 }
 
+@GetMapping("/nearby")
+public List<ParkingSpot> getNearbyParkingSpots(
+
+        @RequestParam Double latitude,
+        @RequestParam Double longitude,
+        @RequestParam Double radius
+
+) {
+
+    return parkingSpotService
+            .getNearbyParkingSpots(
+                    latitude,
+                    longitude,
+                    radius
+            );
+}
 
     @PostMapping
     public ParkingSpot createParkingSpot(@RequestBody ParkingSpot parkingSpot) {

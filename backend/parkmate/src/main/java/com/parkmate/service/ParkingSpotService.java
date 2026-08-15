@@ -44,4 +44,32 @@ public class ParkingSpotService {
     public ParkingSpot createParkingSpot(ParkingSpot parkingSpot) {
         return parkingSpotRepository.save(parkingSpot);
     }
+    public List<ParkingSpot> getNearbyParkingSpots(
+        Double latitude,
+        Double longitude,
+        Double radius
+) {
+
+    return parkingSpotRepository
+            .findAll()
+            .stream()
+            .filter(spot -> {
+
+                double distance = Math.sqrt(
+                        Math.pow(
+                                spot.getLatitude() - latitude,
+                                2
+                        ) +
+                        Math.pow(
+                                spot.getLongitude() - longitude,
+                                2
+                        )
+                );
+
+                return distance <= radius;
+
+            })
+            .toList();
+}
+
 }
