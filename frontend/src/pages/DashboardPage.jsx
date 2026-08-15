@@ -1,29 +1,16 @@
 import ParkingMap from "../components/ParkingMap";
+import AddParkingSpotForm from "../components/AddParkingSpotForm";
 
 function DashboardPage() {
-
-  const token =
-    localStorage.getItem("token");
-
   return (
-    <div>
+    <div className="dashboard-container">
+      <h1>🚗 ParkMate Dashboard</h1>
 
-      <h1>ParkMate Dashboard</h1>
+      <p>Find available parking spots near you.</p>
 
-      <p>Authentication successful</p>
-
-      <textarea
-        rows="8"
-        cols="80"
-        value={token || ""}
-        readOnly
-      />
-
-      <br />
-      <br />
+      <AddParkingSpotForm />
 
       <ParkingMap />
-
     </div>
   );
 }
