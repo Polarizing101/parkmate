@@ -2,45 +2,53 @@ import { useState } from "react";
 import axios from "axios";
 
 function AddParkingSpotForm() {
-
   const [street, setStreet] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
-    try {
+    if (
+      !street.trim() ||
+      !latitude ||
+      !longitude
+    ) {
+      alert("All fields are required");
+      return;
+    }
 
+    try {
       await axios.post(
         "http://localhost:8080/api/parking-spots",
         {
           street,
           latitude: Number(latitude),
           longitude: Number(longitude),
-          status: "AVAILABLE"
+          status: "AVAILABLE",
         }
       );
 
       alert("Parking spot added");
 
+      setStreet("");
+      setLatitude("");
+      setLongitude("");
+
       window.location.reload();
 
     } catch (error) {
-
       console.error(error);
-
-      alert("Error adding spot");
+      alert("Error adding parking spot");
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-
       <h3>Add Parking Spot</h3>
 
       <input
+        type="text"
         placeholder="Street"
         value={street}
         onChange={(e) =>
@@ -52,6 +60,8 @@ function AddParkingSpotForm() {
       <br />
 
       <input
+        type="number"
+        step="any"
         placeholder="Latitude"
         value={latitude}
         onChange={(e) =>
@@ -63,6 +73,8 @@ function AddParkingSpotForm() {
       <br />
 
       <input
+        type="number"
+        step="any"
         placeholder="Longitude"
         value={longitude}
         onChange={(e) =>
@@ -76,7 +88,6 @@ function AddParkingSpotForm() {
       <button type="submit">
         Add Spot
       </button>
-
     </form>
   );
 }

@@ -2,6 +2,7 @@ import ParkingMap from "../components/ParkingMap";
 import AddParkingSpotForm from "../components/AddParkingSpotForm";
 import NearbySearch from "../components/NearbySearch";
 import ParkingStats from "../components/ParkingStats";
+import "../styles/dashboard.css";
 
 function DashboardPage() {
   return (
