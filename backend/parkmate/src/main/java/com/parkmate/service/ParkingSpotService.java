@@ -1,11 +1,11 @@
 package com.parkmate.service;
 
 import com.parkmate.entity.ParkingSpot;
+import com.parkmate.exception.ResourceNotFoundException;
 import com.parkmate.repository.ParkingSpotRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ParkingSpotService {
@@ -20,8 +20,15 @@ public class ParkingSpotService {
         return parkingSpotRepository.findAll();
     }
 
-    public Optional<ParkingSpot> getParkingSpotById(Long id) {
-        return parkingSpotRepository.findById(id);
+    public ParkingSpot getParkingSpotById(Long id) {
+
+        return parkingSpotRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(
+                                "Parking spot not found"
+                        )
+                );
     }
 
     public ParkingSpot createParkingSpot(ParkingSpot parkingSpot) {

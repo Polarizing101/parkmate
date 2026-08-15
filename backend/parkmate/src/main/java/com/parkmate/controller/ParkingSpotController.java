@@ -25,4 +25,11 @@ public class ParkingSpotController {
     public ParkingSpot createParkingSpot(@RequestBody ParkingSpot parkingSpot) {
         return parkingSpotService.createParkingSpot(parkingSpot);
     }
+
+    @GetMapping("/{id}")
+    public ParkingSpot getParkingSpotById(
+        @PathVariable Long id
+) {
+    return parkingSpotService.getParkingSpotById(id);
+}
 }
