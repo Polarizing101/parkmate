@@ -7,6 +7,8 @@ import java.util.List;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "parking_spots")
@@ -26,6 +28,9 @@ public class ParkingSpot {
     private Double longitude;
 
     private String street;
+
+    private LocalDateTime createdAt;
+    
 
     @Enumerated(EnumType.STRING)
     private ParkingSpotStatus status;

@@ -9,6 +9,9 @@ import java.util.List;
 
 import com.parkmate.entity.ParkingSpotStatus;
 
+import java.time.LocalDateTime;
+
+
 
 @Service
 public class ParkingSpotService {
@@ -41,9 +44,19 @@ public class ParkingSpotService {
                 );
     }
 
-    public ParkingSpot createParkingSpot(ParkingSpot parkingSpot) {
-        return parkingSpotRepository.save(parkingSpot);
-    }
+    public ParkingSpot createParkingSpot(
+        ParkingSpot parkingSpot
+) {
+
+    parkingSpot.setCreatedAt(
+            LocalDateTime.now()
+    );
+
+    return parkingSpotRepository.save(
+            parkingSpot
+    );
+}
+
     public List<ParkingSpot> getNearbyParkingSpots(
         Double latitude,
         Double longitude,
