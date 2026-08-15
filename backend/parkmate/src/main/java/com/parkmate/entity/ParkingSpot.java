@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 
 @Entity
 @Table(name = "parking_spots")
@@ -24,7 +27,9 @@ public class ParkingSpot {
 
     private String street;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ParkingSpotStatus status;
+
 
     @OneToMany(mappedBy = "parkingSpot")
     private List<ParkingReport> reports;
