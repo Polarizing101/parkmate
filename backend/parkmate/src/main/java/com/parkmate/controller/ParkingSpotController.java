@@ -21,6 +21,14 @@ public class ParkingSpotController {
         return parkingSpotService.getAllParkingSpots();
     }
 
+    @GetMapping("/available")
+    public List<ParkingSpot> getAvailableParkingSpots() {
+
+    return parkingSpotService
+            .getAvailableParkingSpots();
+}
+
+
     @PostMapping
     public ParkingSpot createParkingSpot(@RequestBody ParkingSpot parkingSpot) {
         return parkingSpotService.createParkingSpot(parkingSpot);

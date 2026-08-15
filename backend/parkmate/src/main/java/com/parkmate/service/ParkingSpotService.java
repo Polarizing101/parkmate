@@ -7,10 +7,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import com.parkmate.entity.ParkingSpotStatus;
+
+
 @Service
 public class ParkingSpotService {
 
     private final ParkingSpotRepository parkingSpotRepository;
+
+    public List<ParkingSpot> getAvailableParkingSpots() {
+
+    return parkingSpotRepository.findByStatus(
+            ParkingSpotStatus.AVAILABLE
+    );
+}
 
     public ParkingSpotService(ParkingSpotRepository parkingSpotRepository) {
         this.parkingSpotRepository = parkingSpotRepository;
