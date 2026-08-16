@@ -1,5 +1,9 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { login } from "../services/authService";
+
+import "../styles/auth.css";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -8,7 +12,6 @@ function LoginPage() {
 
   const handleLogin = async () => {
     try {
-
       const response =
         await login({
           email,
@@ -20,13 +23,10 @@ function LoginPage() {
         response.data.token
       );
 
-      alert("Login successful");
-
       window.location.href =
         "/dashboard";
 
     } catch (error) {
-
       console.error(error);
 
       alert("Login failed");
@@ -34,36 +34,56 @@ function LoginPage() {
   };
 
   return (
-    <div>
-      <h1>ParkMate Login</h1>
+    <div className="auth-container">
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) =>
-          setEmail(e.target.value)
-        }
-      />
+      <div className="auth-card">
 
-      <br />
-      <br />
+        <h1>🚗 ParkMate</h1>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) =>
-          setPassword(e.target.value)
-        }
-      />
+        <h2>Login</h2>
 
-      <br />
-      <br />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
+        />
 
-      <button onClick={handleLogin}>
-        Login
-      </button>
+        <br />
+        <br />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
+        />
+
+        <br />
+        <br />
+
+        <button
+          onClick={handleLogin}
+        >
+          Login
+        </button>
+
+        <br />
+        <br />
+
+        <p>
+          Don't have an account?
+        </p>
+
+        <Link to="/register">
+          Register here
+        </Link>
+
+      </div>
 
     </div>
   );
