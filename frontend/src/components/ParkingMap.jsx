@@ -7,29 +7,12 @@ import {
 
 import "leaflet/dist/leaflet.css";
 
-import { useEffect, useState } from "react";
+import MapCenterUpdater from "./MapCenterUpdater";
 
-import { getParkingSpots } from "../services/parkingService";
-
-function ParkingMap() {
-  const [spots, setSpots] = useState([]);
-
-  useEffect(() => {
-    loadParkingSpots();
-  }, []);
-
-  const loadParkingSpots = async () => {
-    try {
-      const response =
-        await getParkingSpots();
-
-      setSpots(response.data);
-
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+function ParkingMap({
+  spots,
+  userLocation,
+}) {
   const getStatusColor = (status) => {
     switch (status?.toUpperCase()) {
       case "AVAILABLE":
@@ -71,10 +54,22 @@ function ParkingMap() {
         width: "100%",
       }}
     >
+      <MapCenterUpdater
+        center={userLocation}
+      />
+
       <TileLayer
         attribution="OpenStreetMap"
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+
+      {userLocation && (
+        <Marker position={userLocation}>
+          <Popup>
+            📍 Your Location
+          </Popup>
+        </Marker>
+      )}
 
       {spots.map((spot) => (
         <Marker

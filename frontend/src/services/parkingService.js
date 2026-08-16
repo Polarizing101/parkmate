@@ -6,3 +6,12 @@ const API_URL =
 export const getParkingSpots = async () => {
   return axios.get(API_URL);
 };
+
+export const createParkingSpot = async (
+  parkingSpot
+) => {
+  return axios.post(
+    API_URL,
+    parkingSpot
+  );
+};

@@ -1,7 +1,9 @@
 import { useState } from "react";
-import axios from "axios";
+import { createParkingSpot } from "../services/parkingService";
 
-function AddParkingSpotForm() {
+function AddParkingSpotForm({
+  reloadSpots,
+}) {
   const [street, setStreet] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
@@ -19,23 +21,20 @@ function AddParkingSpotForm() {
     }
 
     try {
-      await axios.post(
-        "http://localhost:8080/api/parking-spots",
-        {
-          street,
-          latitude: Number(latitude),
-          longitude: Number(longitude),
-          status: "AVAILABLE",
-        }
-      );
-
-      alert("Parking spot added");
+      await createParkingSpot({
+        street,
+        latitude: Number(latitude),
+        longitude: Number(longitude),
+        status: "AVAILABLE",
+      });
 
       setStreet("");
       setLatitude("");
       setLongitude("");
 
-      window.location.reload();
+      await reloadSpots();
+
+      alert("Parking spot added");
 
     } catch (error) {
       console.error(error);
