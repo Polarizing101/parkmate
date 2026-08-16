@@ -110,6 +110,30 @@ POST /api/favorites
 
 ---
 
+# Screenshots
+
+## Login Page
+
+screenshots/login.png
+
+## Register Page
+
+screenshots/register.png
+
+## Dashboard
+
+screenshots/dashboard.png
+
+## Interactive Map
+
+screenshots/map.png
+
+## Nearby Search
+
+screenshots/nearbynearby-search.png
+
+---
+
 ## Future Improvements
 
 - Mobile App
