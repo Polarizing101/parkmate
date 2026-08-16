@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
 import ParkingMap from "../components/ParkingMap";
 import AddParkingSpotForm from "../components/AddParkingSpotForm";
 import NearbySearch from "../components/NearbySearch";
@@ -61,6 +63,7 @@ function DashboardPage() {
 
   return (
     <div className="dashboard-container">
+
       <Navbar />
 
       <h1>🚗 ParkMate Dashboard</h1>
@@ -70,10 +73,6 @@ function DashboardPage() {
           📍 Find Nearby Parking
         </button>
       </div>
-
-      <p>
-        Find available parking spots near you.
-      </p>
 
       <ParkingStats spots={spots} />
 
@@ -96,6 +95,9 @@ function DashboardPage() {
           userLocation={userLocation}
         />
       </div>
+
+      <Footer />
+
     </div>
   );
 }

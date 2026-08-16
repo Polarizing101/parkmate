@@ -37,3 +37,9 @@
 .light-theme .stat-card {
   color: white;
 }
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  padding: 20px;
+  color: #94a3b8;
+}
