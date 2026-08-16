@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import Navbar from "../components/Navbar";
 import ParkingMap from "../components/ParkingMap";
 import AddParkingSpotForm from "../components/AddParkingSpotForm";
 import NearbySearch from "../components/NearbySearch";
@@ -60,18 +61,11 @@ function DashboardPage() {
 
   return (
     <div className="dashboard-container">
+      <Navbar />
+
       <h1>🚗 ParkMate Dashboard</h1>
 
       <div className="top-actions">
-        <button
-          onClick={() => {
-            localStorage.removeItem("token");
-            window.location.href = "/";
-          }}
-        >
-          Logout
-        </button>
-
         <button onClick={findMyLocation}>
           📍 Find Nearby Parking
         </button>
