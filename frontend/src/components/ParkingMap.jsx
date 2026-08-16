@@ -5,6 +5,8 @@ import {
   Popup,
 } from "react-leaflet";
 
+import L from "leaflet";
+
 import "leaflet/dist/leaflet.css";
 
 import MapCenterUpdater from "./MapCenterUpdater";
@@ -13,24 +15,44 @@ function ParkingMap({
   spots,
   userLocation,
 }) {
-  const getStatusColor = (status) => {
-    switch (status?.toUpperCase()) {
+
+  const createIcon = (color) => {
+    return new L.DivIcon({
+      className: "",
+      html: `
+        <div
+          style="
+            background:${color};
+            width:20px;
+            height:20px;
+            border-radius:50%;
+            border:2px solid white;
+            box-shadow:0 0 5px rgba(0,0,0,0.5);
+          "
+        ></div>
+      `,
+      iconSize: [20, 20],
+    });
+  };
+
+  const getMarkerIcon = (status) => {
+    switch (status) {
       case "AVAILABLE":
-        return "#22c55e";
+        return createIcon("#22c55e");
 
       case "OCCUPIED":
-        return "#ef4444";
+        return createIcon("#ef4444");
 
       case "EXPIRED":
-        return "#6b7280";
+        return createIcon("#6b7280");
 
       default:
-        return "#000000";
+        return createIcon("#3b82f6");
     }
   };
 
   const getStatusIcon = (status) => {
-    switch (status?.toUpperCase()) {
+    switch (status) {
       case "AVAILABLE":
         return "🟢";
 
@@ -78,6 +100,9 @@ function ParkingMap({
             spot.latitude,
             spot.longitude,
           ]}
+          icon={getMarkerIcon(
+            spot.status
+          )}
         >
           <Popup>
             <strong>
@@ -87,20 +112,10 @@ function ParkingMap({
             <br />
             <br />
 
-            <span
-              style={{
-                fontWeight: "bold",
-                fontSize: "18px",
-                color: getStatusColor(
-                  spot.status
-                ),
-              }}
-            >
-              {getStatusIcon(
-                spot.status
-              )}{" "}
-              {spot.status}
-            </span>
+            {getStatusIcon(
+              spot.status
+            )}{" "}
+            {spot.status}
 
             <br />
             <br />
