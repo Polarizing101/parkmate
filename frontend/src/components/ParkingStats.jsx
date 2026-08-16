@@ -1,54 +1,50 @@
-import { useEffect, useState } from "react";
-import { getParkingSpots } from "../services/parkingService";
+function ParkingStats({ spots = [] }) {
 
-function ParkingStats() {
+  const available =
+    spots.filter(
+      (spot) =>
+        spot.status === "AVAILABLE"
+    ).length;
 
-  const [count, setCount] = useState(0);
+  const occupied =
+    spots.filter(
+      (spot) =>
+        spot.status === "OCCUPIED"
+    ).length;
 
-  useEffect(() => {
-
-    loadStats();
-
-  }, []);
-
-  const loadStats = async () => {
-
-    try {
-
-      const response =
-        await getParkingSpots();
-
-      const availableSpots =
-        response.data.filter(
-          spot =>
-            spot.status === "AVAILABLE"
-        );
-
-      setCount(
-        availableSpots.length
-      );
-
-    } catch (error) {
-
-      console.error(error);
-    }
-  };
+  const expired =
+    spots.filter(
+      (spot) =>
+        spot.status === "EXPIRED"
+    ).length;
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        background: "#1e293b",
-        color: "white",
-        borderRadius: "10px",
-        marginBottom: "20px"
-      }}
-    >
-      <h2>
-        Available Parking Spots
-      </h2>
+    <div className="stats-grid">
 
-      <h1>{count}</h1>
+      <div className="stat-card available">
+        🟢
+        <br />
+        Available
+        <br />
+        {available}
+      </div>
+
+      <div className="stat-card occupied">
+        🔴
+        <br />
+        Occupied
+        <br />
+        {occupied}
+      </div>
+
+      <div className="stat-card expired">
+        ⚫
+        <br />
+        Expired
+        <br />
+        {expired}
+      </div>
+
     </div>
   );
 }
