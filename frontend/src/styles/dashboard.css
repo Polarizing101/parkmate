@@ -23,3 +23,17 @@
 .navbar button:hover {
   background-color: #dc2626;
 }
+.light-theme {
+  background-color: #f8fafc;
+  color: #111827;
+}
+
+.light-theme .navbar,
+.light-theme .card {
+  background-color: white;
+  color: #111827;
+}
+
+.light-theme .stat-card {
+  color: white;
+}
