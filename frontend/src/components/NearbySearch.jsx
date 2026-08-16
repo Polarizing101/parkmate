@@ -1,106 +1,44 @@
-import { useState } from "react";
-import axios from "axios";
-
-function NearbySearch() {
-
-  const [latitude, setLatitude] =
-    useState("");
-
-  const [longitude, setLongitude] =
-    useState("");
-
-  const [radius, setRadius] =
-    useState("");
-
-  const [results, setResults] =
-    useState([]);
-
-  const searchNearby = async () => {
-
-    try {
-
-      const response =
-        await axios.get(
-          "http://localhost:8080/api/parking-spots/nearby",
-          {
-            params: {
-              latitude,
-              longitude,
-              radius,
-            },
-          }
-        );
-
-      setResults(response.data);
-
-    } catch (error) {
-
-      console.error(error);
-
-      alert("Search failed");
-    }
-  };
-
+function NearbySearch({
+  spots = [],
+  userLocation,
+}) {
   return (
     <div>
+      <h3>
+        Nearby Parking Results
+      </h3>
 
-      <h3>Nearby Parking Search</h3>
+      {userLocation && (
+        <p>
+          📍 User Location:
+          {" "}
+          {userLocation[0].toFixed(4)},
+          {" "}
+          {userLocation[1].toFixed(4)}
+        </p>
+      )}
 
-      <input
-        placeholder="Latitude"
-        value={latitude}
-        onChange={(e) =>
-          setLatitude(e.target.value)
-        }
-      />
+      {spots.length === 0 ? (
+        <p>
+          No nearby parking spots found.
+        </p>
+      ) : (
+        spots.map((spot) => (
+          <div key={spot.id}>
+            <strong>
+              {spot.street}
+            </strong>
 
-      <br />
-      <br />
+            <br />
 
-      <input
-        placeholder="Longitude"
-        value={longitude}
-        onChange={(e) =>
-          setLongitude(e.target.value)
-        }
-      />
+            Status:
+            {" "}
+            {spot.status}
 
-      <br />
-      <br />
-
-      <input
-        placeholder="Radius"
-        value={radius}
-        onChange={(e) =>
-          setRadius(e.target.value)
-        }
-      />
-
-      <br />
-      <br />
-
-      <button onClick={searchNearby}>
-        Search
-      </button>
-
-      <hr />
-
-      {results.map((spot) => (
-
-        <div key={spot.id}>
-
-          <strong>
-            {spot.street}
-          </strong>
-
-          <p>
-            Status: {spot.status}
-          </p>
-
-        </div>
-
-      ))}
-
+            <hr />
+          </div>
+        ))
+      )}
     </div>
   );
 }

@@ -7,25 +7,20 @@ import ParkingStats from "../components/ParkingStats";
 
 import {
   getParkingSpots,
+  getNearbyParkingSpots,
 } from "../services/parkingService";
 
 import "../styles/dashboard.css";
 
 function DashboardPage() {
-  const [spots, setSpots] =
-    useState([]);
-
-  const [userLocation,
-    setUserLocation] =
-    useState(null);
+  const [spots, setSpots] = useState([]);
+  const [nearbySpots, setNearbySpots] = useState([]);
+  const [userLocation, setUserLocation] = useState(null);
 
   const loadSpots = async () => {
     try {
-      const response =
-        await getParkingSpots();
-
+      const response = await getParkingSpots();
       setSpots(response.data);
-
     } catch (error) {
       console.error(error);
     }
@@ -37,72 +32,76 @@ function DashboardPage() {
 
   const findMyLocation = () => {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
 
-        setUserLocation([
-          position.coords.latitude,
-          position.coords.longitude,
-        ]);
+        setUserLocation([lat, lng]);
 
+        try {
+          const response =
+            await getNearbyParkingSpots(
+              lat,
+              lng,
+              1
+            );
+
+          setNearbySpots(response.data);
+        } catch (error) {
+          console.error(error);
+        }
       },
       (error) => {
-
         console.error(error);
-
-        alert(
-          "Unable to get location"
-        );
+        alert("Unable to get location");
       }
     );
   };
 
   return (
     <div className="dashboard-container">
+      <h1>🚗 ParkMate Dashboard</h1>
 
-      <h1>
-        🚗 ParkMate Dashboard
-      </h1>
+      <div className="top-actions">
+        <button
+          onClick={() => {
+            localStorage.removeItem("token");
+            window.location.href = "/";
+          }}
+        >
+          Logout
+        </button>
 
-      <button
-        onClick={() => {
-          localStorage.removeItem(
-            "token"
-          );
-
-          window.location.href = "/";
-        }}
-      >
-        Logout
-      </button>
-
-      <button
-        onClick={findMyLocation}
-      >
-        📍 Find My Location
-      </button>
+        <button onClick={findMyLocation}>
+          📍 Find Nearby Parking
+        </button>
+      </div>
 
       <p>
-        Find available parking spots
-        near you.
+        Find available parking spots near you.
       </p>
 
-      <ParkingStats />
+      <ParkingStats spots={spots} />
 
-      <AddParkingSpotForm
-        reloadSpots={loadSpots}
-      />
+      <div className="card">
+        <AddParkingSpotForm
+          reloadSpots={loadSpots}
+        />
+      </div>
 
-      <br />
+      <div className="card">
+        <NearbySearch
+          spots={nearbySpots}
+          userLocation={userLocation}
+        />
+      </div>
 
-      <NearbySearch />
-
-      <br />
-
-      <ParkingMap
-        spots={spots}
-        userLocation={userLocation}
-      />
-
+      <div className="map-wrapper">
+        <ParkingMap
+          spots={spots}
+          userLocation={userLocation}
+        />
+      </div>
     </div>
   );
 }

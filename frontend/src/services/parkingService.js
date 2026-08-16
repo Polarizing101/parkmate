@@ -15,3 +15,22 @@ export const createParkingSpot = async (
     parkingSpot
   );
 };
+
+export const getNearbyParkingSpots =
+  async (
+    latitude,
+    longitude,
+    radius
+  ) => {
+    return axios.get(
+      `${API_URL}/nearby`,
+      {
+        params: {
+          latitude,
+          longitude,
+          radius,
+        },
+      }
+    );
+  };
+  
