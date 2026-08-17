@@ -70,43 +70,133 @@ ParkMate is a smart parking finder application that helps users discover availab
 
 ---
 
-## Architecture
 
-Frontend (React)
-↓
-REST API (Spring Boot)
-↓
+# Build & Deployment Guide
+
+## Prerequisites
+
+Before running the application, ensure the following software is installed:
+
+- Java 21
+- Maven
+- Node.js
+- npm
+- Docker
+- Git
+
+## Clone the Repository
+
+
+git clone https://github.com/Polarizing101/parkmate.git
+cd parkmate
+
+
+## Database Setup
+
+Start the MySQL database using Docker:
+
+
+cd backend/parkmate
+docker compose up -d
+
+
+## Backend Build
+
+Build the Spring Boot application:
+
+
+./mvnw clean package
+
+
+## Run the Backend
+
+Start the backend server:
+
+
+./mvnw spring-boot:run
+
+
+The backend will be available at:
+
+http://localhost:8080
+
+## API Documentation
+
+Swagger UI is available at:
+
+http://localhost:8080/swagger-ui/index.html
+
+## Frontend Setup
+
+Navigate to the frontend directory and install dependencies:
+
+
+cd frontend
+npm install
+
+
+## Run the Frontend
+
+Start the React application:
+
+
+npm run dev
+
+
+The frontend will be available at:
+
+http://localhost:5173
+
+## Application Workflow
+
+1. Start the MySQL database using Docker.
+2. Start the Spring Boot backend.
+3. Start the React frontend.
+4. Register or log in.
+5. Access the dashboard.
+6. Search, add, and manage parking spots.
+
+## System Architecture
+
+
+React Frontend
+      ↓
+Spring Boot REST API
+      ↓
 Service Layer
-↓
+      ↓
 Repository Layer
-↓
+      ↓
 MySQL Database
 
----
 
-## Main Endpoints
+## Testing
 
-### Authentication
+Run backend tests:
 
-POST /api/auth/register
 
-POST /api/auth/login
+./mvnw test
 
-### Parking Spots
 
-GET /api/parking-spots
+Verify the frontend production build:
 
-POST /api/parking-spots
 
-GET /api/parking-spots/available
+npm run build
 
-GET /api/parking-spots/nearby
 
-### Favorites
+If both commands complete successfully, the application is ready for deployment.
 
-GET /api/favorites
+## Environment
 
-POST /api/favorites
+- Java 21
+- Spring Boot
+- React
+- MySQL 8
+- Docker
+- Node.js 20+
+- macOS
+
+
 
 ---
 
